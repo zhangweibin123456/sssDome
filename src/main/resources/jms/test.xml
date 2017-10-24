@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:stream="http://www.springframework.org/schema/integration/stream"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+ 			http://www.springframework.org/schema/beans/spring-beans.xsd 
+ 			http://www.springframework.org/schema/context 
+ 			http://www.springframework.org/schema/context/spring-context.xsd 
+ 			http://www.springframework.org/schema/integration 
+ 			http://www.springframework.org/schema/integration/spring-integration.xsd 
+ 			http://www.springframework.org/schema/integration/jms 
+ 			http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
+ 			http://www.springframework.org/schema/jee  
+	        http://www.springframework.org/schema/jee/spring-jee.xsd
+ 			http://www.springframework.org/schema/integration/stream 
+ 			http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd">
+
+
+ 		<context:annotation-config></context:annotation-config>	
+	    <context:component-scan base-package="com.chinasofti.vtcsvc.messaging.hub"></context:component-scan>
+
+<!-- 	<context:component-scan base-package="jms"></context:component-scan> -->
+
+ 	 <int:channel id="requestChannel_ivr"/>
+ 	 <int:channel id="replyChannel_ivr"/>
+
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter"
+		lazy-init="true">
+		<property name="targetConnectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL" value="tcp://localhost:61616"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="requestQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="queue.demo"/>
+	</bean>
+
+    <int:gateway id="transtGateway_ivr" service-interface="com.chinasofti.vtcsvc.messaging.hub.TransGatewayIvr"
+				default-request-channel="requestChannel_ivr">
+				<int:method name="transport"/>
+			</int:gateway>
+			
+			<int:chain input-channel="requestChannel_ivr" >
+				<jms:outbound-channel-adapter destination="requestQueue"
+					 
+					connection-factory="connectionFactory"  extract-payload="true" />
+	</int:chain>
+
+
+  
+
+
+</beans>

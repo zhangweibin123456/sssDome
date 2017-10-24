@@ -1,0 +1,118 @@
+#userlogin_body {
+	padding-right: 0px; padding-left: 0px; background: url(../images/logo/ds_r2_c2.gif) #226cc5 repeat-x 50% top; padding-bottom: 0px; margin: 0px 0px 0px;font: 12px/150% arial, "宋体" ,helvetica,sans-serif; padding-top: 0px; text-decoration: none
+}
+#user_login_top {
+	height:120px; padding-right: 0px; padding-left: 0px; background: url(../images/logo/dljm_top_c2.gif)  repeat-x; padding-bottom: 0px; padding-top: 0px; clear:both
+}
+#user_login_dt {
+	width:900px; height:120px; background: url(../images/logo/dldt_r1_c1.gif); padding-bottom: 0px; padding-top: 0px;clear: both;
+}
+.user_login_dt {
+      padding-left:150px;
+	}
+#login_top {
+	height:44px; padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px; clear:both
+}
+
+
+
+#user_login_bj {
+	height:414px; text-align:center; padding-right: 0px; padding-left: 0px; background: url(../images/logo/dlbj_r1_c1.png) #226cc5; padding-bottom: 0px; margin: 0px; padding-top: 20px;margin: 0px 0px 0px;
+}
+#user_login_t {
+	padding-right: 0px; padding-left: 0px; padding-bottom: 0px; background:url(../images/dlk/dlkds.png);  padding-top: 15px;margin: 0px 0px 0px;width:325px;height:218px;margin-left: auto;margin-right: auto; 
+    position: relative;left:850px;top: 0px;float:left;width:325px;
+}
+#user_login_db {
+	height:34px; padding-right: 0px; padding-left: 0px; background: url(../images/logo/dldb_r1_c1.gif) #226cc5; padding-bottom: 0px; margin: 0px; padding-top: 0px;margin: 0px 0px 0px 
+}
+
+#user_login {
+	height:202px;width:307px;padding-right: 20px; padding-left: 0px; 
+	 padding-bottom: 0px; padding-top: 0px;background: url(../images/dlk/dlkdc.png);
+	  position: relative;left:17px;top: 0px;float:left;
+}
+#user_main {
+	padding-right: 0px; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px
+}
+#user_login dl {
+	padding-right: 0px; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px
+}
+#user_login dd {
+	padding-right: 0px; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px
+}
+#user_main ul {
+	padding-right: 0px; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px
+}
+#user_main li {
+	padding-right: 0px; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px
+}
+form {
+	padding-right: 0px; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px
+}
+#user_login {
+	margin: 0px auto; width: 270px
+}
+#user_main {
+	clear: both
+}
+#user_main li {
+	float: left; list-style-type: none
+}
+.user_main_box {
+	padding-right: 0px; padding-left: 49px; padding-bottom: 0px; margin: 0px; padding-top: 20px
+}
+
+.user_main_box li {
+	padding-right: 0px; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px
+}
+.user_main_box ul {
+	clear: both;
+}
+.user_main_box li {
+	padding-left: 0px; list-style-type: none;
+}
+.user_main_box .user_main_text {
+	line-height: 64px; height: 64px;background: url(../images/dlk/yhmmm.png) no-repeat;
+	position: relative;left:-25px;top: 0px;float:left;width:47px;
+}
+.user_main_box .user_main_input {
+	line-height: 32px; height: 32px;
+	position: relative;left:33px;top: -67px;float:left;width:182px;
+	
+}
+.user_main_box .user_main_text {
+	width: 47px; color: #000
+}
+.user_main_box .user_main_input img {
+	
+	
+}
+.txtusernamecssclass {
+	border-top-width: 0px; padding-left: 20px; border-left-width: 0px; background: url(../images/dlk/wbk.png) no-repeat; border-bottom-width: 0px; width: 182px; line-height: 27px; height: 27px; border-right-width: 0px
+}
+.txtpasswordcssclass {
+	border-top-width: 0px; padding-left: 20px; border-left-width: 0px; background: url(../images/dlk/wbk.png) no-repeat; border-bottom-width: 0px; width: 182px; line-height: 27px; height: 27px; border-right-width: 0px
+}
+.txtvalidatecodecssclass {
+	border-top-width: 0px; padding-left: 25px; border-left-width: 0px; background: url(../images/logo/dl_yzm_c1.gif) no-repeat; ime-mode: disabled; border-bottom-width: 0px; width: 127px; line-height: 30px; height: 31px; border-right-width: 0px
+}
+.user_login_icon {
+	border-top-width: 0px; padding-left: 0px; border-left-width: 0px; background: url(../images/dlk/icon.png) no-repeat; border-bottom-width: 0px; width:32px; line-height: 31px; height: 32px; border-right-width: 0px;
+	float:left;width:32px;margin-left: 80px;
+}
+.user_login_yhdl {
+	border-top-width: 0px; padding-left: 5px; border-left-width: 0px; background: url(../images/dlk/yhdl.png) no-repeat; border-bottom-width: 0px; width:81px; line-height: 20px; height: 21px; border-right-width: 0px;
+	float:left;width:120px;margin-top:8px; margin-left:8px; 
+}
+.user_login_hx {
+	border-top-width: 0px; padding-left: 0px; border-left-width: 0px; background: url(../images/dlk/dlkhx.png) no-repeat; border-bottom-width: 0px; width:325px; line-height: 2px; height: 2px; border-right-width: 0px;
+	position: relative;left:-20px;top: -10px;float:left;width:325px;
+}
+.ibtn {
+	width: 99px; height: 36px;
+}
+
+.vc-text {width: 90px;}
+.vc-pic {vertical-align: middle;margin-bottom: 0px!important;margin-left: 0px!important;cursor: pointer;}
+*:focus {outline: none;}

@@ -1,0 +1,39 @@
+<beans:beans xmlns="http://www.springframework.org/schema/batch"  
+    xmlns:beans="http://www.springframework.org/schema/beans" xmlns:bean="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans.xsd  
+    http://www.springframework.org/schema/batch  
+    http://www.springframework.org/schema/batch/spring-batch-3.0.xsd">  
+    
+    <!--第一步： 获得 transactionManager-->
+    <bean:bean id="transactionManager"  
+        class="org.springframework.batch.support.transaction.ResourcelessTransactionManager">  
+    </bean:bean>
+    
+    <!--第二步： 获得 jobRepository-->
+    <bean:bean id="jobRepository"  
+        class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">  
+        <bean:property name="transactionManager" ref="transactionManager" />  
+    </bean:bean>  
+    
+     <!--第三步： 获得 jobLauncher-->
+    <bean:bean id="jobLauncher"  
+        class="org.springframework.batch.core.launch.support.SimpleJobLauncher">  
+        <bean:property name="jobRepository" ref="jobRepository" />  
+    </bean:bean>  
+    
+    <!-- 任务  job -->
+    <job id="ioSampleJob">  
+        <step id="step1" next="step2" >  
+            <tasklet ref="begin"></tasklet>  
+        </step>  
+        <step id="step2">  
+            <tasklet ref="end"></tasklet>  
+        </step>  
+    </job> 
+     
+    <bean:bean id="begin" class="batch.MyFirstTasklet" scope="step"></bean:bean> 
+    <bean:bean id="end" class="batch.MySecondTasklet" scope="step"></bean:bean>  
+    
+</beans:beans>  

@@ -1,0 +1,54 @@
+$package('XHY.login');
+XHY.login = function(){
+	return {
+		toLogin:function(){
+			try{
+				var form = $("#loginForm");
+				if(form.form('validate')){
+					XHY.progress('Please waiting','Loading...');
+					XHY.submitForm(form,function(data){
+						XHY.closeProgress();
+						if(data!=null){
+							if(data.success){
+						 		window.location= "main.shtml";
+					        }else{
+					       	   XHY.alert('提示',data.msg,'error',function(){
+					       		   $(this).dialog('close');
+					       	   });  
+					        }
+						}
+//				        XHY.login.loadVrifyCode();//刷新验证码
+					});
+				}
+			}catch(e){
+				
+			}
+			return false;
+		},
+		init:function(){
+			if(window.top != window.self){
+				window.top.location =  window.self.location;
+			}
+			
+//			$("#btnLogin").hover(
+//			  function () {
+//			    $(this).addClass("logbtnhover");
+//			  },
+//			  function () {
+//			    $(this).removeClass("logbtnhover");
+//			  }
+//			);
+			
+			var loginForm = $("#loginForm");
+
+			$("#btnLogin").bind('click', function(){
+				loginForm.submit(XHY.login.toLogin);
+			});
+			
+		}
+	}
+}();
+
+$(function(){
+	XHY.login.init();
+});		

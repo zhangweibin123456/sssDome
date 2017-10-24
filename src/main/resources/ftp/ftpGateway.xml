@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-ftp="http://www.springframework.org/schema/integration/ftp"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration/ftp http://www.springframework.org/schema/integration/ftp/spring-integration-ftp.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- ftp connect -->
+	<bean id="ftpSessionFactory"
+		class="org.springframework.integration.ftp.session.DefaultFtpSessionFactory">
+		<property name="host" value="localhost" />
+		<property name="port" value="21" />
+		<property name="username" value="admin" />
+		<property name="password" value="admin" />
+	</bean>
+
+	<!-- ftp gateway -->
+	<int:gateway id="ftpGateway" service-interface="ftp.FtpGateway">
+		<int:method name="upload" request-channel="uploadInputChannel" reply-channel="uploadOutputChannel"/>
+		<int:method name="download"  request-channel="downloadInputChannel" reply-channel="downloadOutputChannel"/>
+		<int:method name="fileList" request-channel="fileListInputChannel" reply-channel="fileListOutputChannel"/>
+		<int:method name="remove" request-channel="removeInputChannel" reply-channel="removeOutputChannel"/>
+		<int:method name="rename" request-channel="renameInputChannel" reply-channel="renameOutputChannel"/>
+	</int:gateway>
+	<!-- upload -->
+	<int-ftp:outbound-gateway id="gatewayUpload"
+		session-factory="ftpSessionFactory" request-channel="uploadInputChannel"
+		reply-channel="uploadOutputChannel" command="put"
+		local-directory-expression="headers['localDirectory']"
+		remote-directory-expression="headers['remoteDirectory']">
+	</int-ftp:outbound-gateway>
+	<int:channel id="uploadInputChannel" />
+	<int:channel id="uploadOutputChannel" />
+
+	<!-- download -->
+	<int-ftp:outbound-gateway id="gatewayDownload"
+		session-factory="ftpSessionFactory" request-channel="downloadInputChannel"
+		reply-channel="downloadOutputChannel" command="get" command-options="-P"
+		local-directory-expression="headers['localDirectory']"
+		remote-directory-expression="headers['remoteDirectory']" expression="payload">
+	</int-ftp:outbound-gateway>
+	<int:channel id="downloadInputChannel" />
+	<int:channel id="downloadOutputChannel" />
+
+	<!-- list File -->
+	<int-ftp:outbound-gateway id="gatewayFileList"
+		session-factory="ftpSessionFactory" request-channel="fileListInputChannel"
+		reply-channel="fileListOutputChannel" command="ls" command-options=""
+		expression="payload">
+	</int-ftp:outbound-gateway>
+	<int:channel id="fileListInputChannel" />
+	<int:channel id="fileListOutputChannel" />
+	
+	<!-- remove -->
+	<int-ftp:outbound-gateway id="gatewayRemove"
+		session-factory="ftpSessionFactory" request-channel="removeInputChannel"
+		reply-channel="removeOutputChannel" command="rm" expression="payload">
+	</int-ftp:outbound-gateway>
+	<int:channel id="removeInputChannel" />
+	<int:channel id="removeOutputChannel" />
+
+	<!-- rename -->
+	<int-ftp:outbound-gateway id="gatewayrename"
+		session-factory="ftpSessionFactory" request-channel="renameInputChannel"
+		reply-channel="renameOutputChannel" command="mv" rename-expression="headers['newFileName']"
+		expression="payload">
+	</int-ftp:outbound-gateway>
+	<int:channel id="renameInputChannel" />
+	<int:channel id="renameOutputChannel" />
+</beans>

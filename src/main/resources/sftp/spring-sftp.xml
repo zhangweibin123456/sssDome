@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int-sftp="http://www.springframework.org/schema/integration/sftp"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration/sftp http://www.springframework.org/schema/integration/sftp/spring-integration-sftp-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-4.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+	<util:properties id="sessionConfig">
+		<prop key="StrictHostKeyChecking">no</prop>
+	</util:properties>
+
+	<!-- sftp工厂 -->
+	<!-- 非加密登录 -->
+	<bean id="defaultSftpSessionFactory"
+		class="org.springframework.integration.sftp.session.DefaultSftpSessionFactory">
+		<property name="host" value="192.168.179.129" />
+		<property name="user" value="root" />
+		<property name="password" value="root" />
+		<property name="clientVersion" value="" />
+		<property name="port" value="22" />
+		<property name="sessionConfig" ref="sessionConfig" />
+	</bean>
+
+	<!-- rsa 加密登录 -->
+	<!-- <bean id="defaultSftpSessionFactory" class="com.chinasofti.vtcsvc.messaging.captiva.bean.CaptivaSftpSessionFactoryBean"> -->
+	<!-- </bean> -->
+
+	<!-- 缓存 -->
+	<bean id="cachingSessionFactory"
+		class="org.springframework.integration.file.remote.session.CachingSessionFactory">
+		<constructor-arg ref="defaultSftpSessionFactory" />
+		<constructor-arg value="10" />
+		<property name="sessionWaitTimeout" value="1000" />
+	</bean>
+
+	<bean id="sftpSessionFactory"
+		class="org.springframework.integration.file.remote.session.CachingSessionFactory">
+		<constructor-arg ref="defaultSftpSessionFactory" />
+	</bean>
+
+	<!--Gateway -->
+	<!-- upload file -->
+	<int:gateway id="gateway" service-interface="sftp.SftpGateway">
+		<int:method name="upload" request-channel="inputChannelUpload" reply-channel="outputChannelUpload"/>
+		<int:method name="download" request-channel="inputChannelDownload" reply-channel="outputChannelDownload"/>
+		<int:method name="remove" request-channel="inputChannelRemove" reply-channel="outputChannelRemove"/>
+		<int:method name="fileList" request-channel="inputChannelList" reply-channel="outputChannelList"/>
+		<int:method name="rename" request-channel="inputChannelRename" reply-channel="outputChannelRename"/>
+	</int:gateway>
+
+	<int-sftp:outbound-gateway id="gatewayOutboundUpload"
+		session-factory="sftpSessionFactory" request-channel="inputChannelUpload"
+		reply-channel="outputChannelUpload" command="put" command-options="-P"
+		remote-directory-expression="headers['directory']" expression="">
+	</int-sftp:outbound-gateway>
+	<int:channel id="inputChannelUpload" />
+	<int:channel id="outputChannelUpload" />
+
+	<!--file Download -->
+	<int-sftp:outbound-gateway id="gatewayOutboundDownload"
+		session-factory="sftpSessionFactory" request-channel="inputChannelDownload"
+		reply-channel="outputChannelDownload" command="get"
+		local-directory-expression="headers['localDirectory']"
+		command-options="-P" expression="payload">
+	</int-sftp:outbound-gateway>
+	<int:channel id="inputChannelDownload" />
+	<int:channel id="outputChannelDownload" />
+
+	<!-- remove file -->
+	<int-sftp:outbound-gateway id="gatewayRM"
+		reply-channel="outputChannelRemove" session-factory="sftpSessionFactory"
+		expression="payload" request-channel="inputChannelRemove" command="rm">
+	</int-sftp:outbound-gateway>
+	<int:channel id="inputChannelRemove" />
+	<int:channel id="outputChannelRemove" />
+
+	<!-- list file -->
+	<int-sftp:outbound-gateway id="listGateway"
+		reply-channel="outputChannelList" session-factory="sftpSessionFactory"
+		expression="payload" request-channel="inputChannelList" command="ls">
+	</int-sftp:outbound-gateway>
+	<int:channel id="inputChannelList" />
+	<int:channel id="outputChannelList" />
+
+	<!-- rename file -->
+	<int-sftp:outbound-gateway id="renameGateway"
+		reply-channel="outputChannelRename" session-factory="sftpSessionFactory"
+		expression="payload" request-channel="inputChannelRename"
+		rename-expression="headers['newFileName']" command="mv">
+	</int-sftp:outbound-gateway>
+	<int:channel id="inputChannelRename" />
+	<int:channel id="outputChannelRename" />
+
+</beans>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:stream="http://www.springframework.org/schema/integration/stream"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+ 			http://www.springframework.org/schema/beans/spring-beans.xsd 
+ 			http://www.springframework.org/schema/context 
+ 			http://www.springframework.org/schema/context/spring-context.xsd 
+ 			http://www.springframework.org/schema/integration 
+ 			http://www.springframework.org/schema/integration/spring-integration.xsd 
+ 			http://www.springframework.org/schema/integration/jms 
+ 			http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
+ 			http://www.springframework.org/schema/jee  
+	        http://www.springframework.org/schema/jee/spring-jee.xsd
+ 			http://www.springframework.org/schema/integration/stream 
+ 			http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd">
+
+
+<!-- 	<context:component-scan base-package="jms"></context:component-scan> -->
+
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter"
+		lazy-init="true">
+		<property name="targetConnectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL" value="tcp://localhost:61616"/>
+			</bean>
+		</property>
+<!-- 		<property name="sessionCacheSize" value="10"/> -->
+<!-- 		<property name="username" value="admin" /> -->
+<!-- 		<property name="password" value="admin" /> -->
+	</bean>
+
+	<int:gateway id="jmsGateway" service-interface="jms.JmsGateway">
+		<int:method name="transport"  request-channel="requestChannel" reply-channel="replyChannel"/>
+		<int:method name="sead"    request-channel="requestChannelVoid" reply-channel="replyChannelVoid"/>
+	</int:gateway>
+
+
+
+<!-- 有返回值 -->
+	<int:chain input-channel="requestChannel" output-channel="replyChannel">
+		<jms:outbound-gateway request-destination="requestQueue"
+			receive-timeout="30000" reply-destination="replyQueue"
+			connection-factory="connectionFactory" extract-request-payload="true"
+			extract-reply-payload="true" />
+	</int:chain>
+
+	<int:channel id="requestChannel" />
+	<int:channel id="replyChannel" />
+	
+	<bean id="requestQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="queue.demo"/>
+	</bean>
+	<bean id="replyQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="queue.reply"/>
+	</bean>
+
+	<!-- 无返回值 -->
+	<int:chain input-channel="requestChannelVoid"  >
+		<jms:outbound-channel-adapter
+			destination="requestQueueVoid" connection-factory="connectionFactory" 
+			extract-payload="true" />
+	</int:chain>
+	       
+
+	<bean id="requestQueueVoid" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="queue.demo" />
+	</bean>
+		<int:channel id="requestChannelVoid" />
+		<int:channel id="replyChannelVoid" />
+
+</beans>

@@ -1,0 +1,83 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>这是一个打印测试页面</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+	<script type="text/javascript">
+		function Preview() 
+		{
+			if (document.all.eprint.defaultPrinterName.length==0){
+				XHY.alert('提示', "请先安装打印机，再执行此功能！");
+				return;
+			}
+		  document.all.eprint.InitPrint();
+		  document.all.eprint.Preview();
+		}
+
+		function Print() {  
+			if (document.all.eprint.defaultPrinterName.length==0){
+				XHY.alert('提示', "请先安装打印机，再执行此功能！");
+				return;
+			}
+		
+		  document.all.eprint.InitPrint();
+		  document.all.eprint.Print();
+			//document.all.eprint.Print(true);//不弹出打印对话框直接打印
+		}
+		
+		
+	</script>
+
+  </head>
+  
+  <body style="text-align:center">
+  	<div style="">
+	  	<button onclick="Preview()" >打印预览</button>  <button onclick="Print()">打印</button>
+	    <h1>这是一个打印测试页</h1>
+    </div>
+    <table border = 1 style="width:500px;height:600px;border-style: solid;border-collapse:collapse;border-color:red">
+    	<tr>
+    		<td>王鹏方尽快立法</td>
+    		<td>王鹏方尽快立法</td>
+    		<td>王鹏方尽快立法</td>
+    		<td>王鹏方尽快立法</td>
+    	</tr>
+    	<tr>
+    		<td>王鹏方尽快立法</td>
+    		<td>王鹏方尽快立法</td>
+    		<td>王鹏方尽快立法</td>
+    		<td>王鹏方尽快立法</td>
+    	</tr>
+    	<tr>
+    		<td>王鹏方尽快立法</td>
+    		<td>王鹏方尽快立法</td>
+    		<td>王鹏方尽快立法</td>
+    		<td>王鹏方尽快立法</td>
+    	</tr>
+    	<tr>
+    		<td>王鹏方尽快立法</td>
+    		<td>王鹏方尽快立法</td>
+    		<td>王鹏方尽快立法</td>
+    		<td>王鹏方尽快立法</td>
+    	</tr>
+    </table>
+    
+    <object id="eprint" classid="clsid:CA03A5A8-9890-49BE-BA4A-8C524EB06441" codebase="eprint.cab#Version=3,0,0,12" viewasext> </object>
+  </body>
+</html>

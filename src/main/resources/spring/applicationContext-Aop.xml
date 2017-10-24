@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jee 
+		http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+	<context:component-scan base-package="spring"></context:component-scan>
+
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	<!-- xml 配置AOP  xml配置仅供学习 目前主流的还是注解实现-->
+	
+<!-- 	<aop:config> -->
+<!-- 	<aop:pointcut expression="execution(* spring.Compute.*(..))"" id="pointcut"/> -->
+<!-- 	<aop:aspect ref="" order="2"> -->
+<!-- 	<aop:before method="" pointcut-ref="pointcut"/> -->
+<!-- 	<aop:after method="" pointcut-ref="pointcut"/> -->
+<!-- 	<aop:after-throwing method="" pointcut-ref="pointcut" throwing=""/> -->
+<!-- 	</aop:aspect> -->
+<!-- 	</aop:config> -->
+	
+	
+
+</beans>
