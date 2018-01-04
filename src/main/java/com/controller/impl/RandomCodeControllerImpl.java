@@ -15,8 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.commons.AppStateStore;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
+//import com.sun.image.codec.jpeg.JPEGCodec;
+//import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 @SuppressWarnings("restriction")
 @Controller
@@ -75,8 +75,8 @@ public class RandomCodeControllerImpl {
 		// 获取输出流对象
 		ServletOutputStream out = response.getOutputStream();
 		// 创建一个和指定输出流关联的JPEGImageEncoder对象
-		JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-		encoder.encode(bi);
+//		JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+//		encoder.encode(bi);
 		// 给浏览器绘制图片
 		out.flush();
 		// 把验证码字符串放进会话中
