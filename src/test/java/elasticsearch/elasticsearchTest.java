@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:elasticsearch/elasticsearch.xml" })
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = { "classpath:elasticsearch/elasticsearch.xml" })
 public class elasticsearchTest {
 
 //	@Autowired
@@ -26,7 +26,7 @@ public class elasticsearchTest {
 //	
 	@Test
 	public void Test() {
-//		System.out.println("*********************start**************************");
+		System.out.println("*********************start**************************");
 //		String result =simpleGateway.send("hashaishai");
 //		System.out.println(result);
 //		System.out.println("*********************end**************************");
